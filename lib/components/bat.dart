@@ -39,7 +39,7 @@ class Bat extends PositionComponent
 
   void moveBy(double dx) {
     add(MoveToEffect(
-      Vector2((position.x + dx).clamp(0, game.width), position.y),
+      Vector2((position.x + dx).clamp(0+(width/2), game.width-(width/2)), position.y),
       EffectController(duration: 0.1),
     ));
   }

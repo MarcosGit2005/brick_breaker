@@ -75,7 +75,7 @@ class _GameAppState extends State<GameApp> {
                                   ),
                               PlayState.won.name: (context, game) =>
                                   const OverlayScreen(
-                                    title: 'Y O U W O N ! ! !',
+                                    title: 'Y O U    W O N ! ! !',
                                     subtitle: 'Tap to Play Again',
                                   ),
                             },
