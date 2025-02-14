@@ -81,6 +81,9 @@ class BrickBreaker extends FlameGame
           ),
     ]);
   }
+  void pause(){
+    //world.children.query<Ball>().first.velocity=0;
+  }
 
   @override
   void onTap() {
@@ -94,10 +97,22 @@ class BrickBreaker extends FlameGame
     super.onKeyEvent(event, keysPressed);
     switch (event.logicalKey) {
       case LogicalKeyboardKey.arrowLeft:
-        world.children.query<Bat>().first.moveBy(-batStep);
+        if (event is KeyDownEvent){
+          world.children.query<Bat>().first.changeState("L");
+        } else if (event is KeyUpEvent){
+          world.children.query<Bat>().first.changeState("");
+        }
       case LogicalKeyboardKey.arrowRight:
-        world.children.query<Bat>().first.moveBy(batStep);
+        if (event is KeyDownEvent){
+          world.children.query<Bat>().first.changeState("R");
+        } else if (event is KeyUpEvent){
+          world.children.query<Bat>().first.changeState("");
+        }
       case LogicalKeyboardKey.space:
+        if (event is KeyDownEvent){
+          print("Pause");
+        }
+        //pause();
       case LogicalKeyboardKey.enter:
         startGame();
     }

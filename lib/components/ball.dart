@@ -62,6 +62,7 @@ class Ball extends CircleComponent
     } else if (other is Bat) {
       velocity.y = -velocity.y;
       velocity.x = (position.x - other.position.x)*5 / other.size.x * game.width * 0.3;
+      other.width = other.width*0.99;
     } else if (other is Brick) {
       if (position.y < other.position.y - other.size.y / 2) {
         velocity.y = -velocity.y;
