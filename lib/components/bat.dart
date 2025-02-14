@@ -49,9 +49,7 @@ class Bat extends PositionComponent
       return;
     }
 
-    print(position.x);
-    print((state==State.LEFT?-100:100) * dt);
-    position.x = ( position.x + (state==State.LEFT?-500:500) * dt).clamp(0+(width/2), game.width-(width/2));
+    position.x = ( position.x + (800 * (state==State.LEFT?-1:1) * dt)).clamp(0+(width/2), game.width-(width/2));
   }
   void changeState(String side){
     if (side=="L"){
@@ -61,7 +59,6 @@ class Bat extends PositionComponent
     } else {
       state = State.STATIC;
     }
-    print(state);
   }
 
   void moveBy(double dx) {

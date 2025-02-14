@@ -69,7 +69,7 @@ class BrickBreaker extends FlameGame
         size: Vector2(batWidth, batHeight),
         cornerRadius: const Radius.circular(ballRadius / 2),
         position: Vector2(width / 2, height * 0.95)));
-    world.addAll([ // Drop the await
+    world.addAll([
       for (var i = 0; i < brickColors.length; i++)
         for (var j = 1; j <= 5; j++)
           Brick(
@@ -78,11 +78,12 @@ class BrickBreaker extends FlameGame
               (j + 2.0) * brickHeight + j * brickGutter,
             ),
             color: brickColors[i],
+            hits: rand.nextInt(3)+1
           ),
     ]);
   }
   void pause(){
-    //world.children.query<Ball>().first.velocity=0;
+    world.children.query<Ball>().first.pauseBall();
   }
 
   @override
@@ -97,24 +98,23 @@ class BrickBreaker extends FlameGame
     super.onKeyEvent(event, keysPressed);
     switch (event.logicalKey) {
       case LogicalKeyboardKey.arrowLeft:
-        if (event is KeyDownEvent){
+        if (event is KeyDownEvent || event is KeyRepeatEvent){
           world.children.query<Bat>().first.changeState("L");
-        } else if (event is KeyUpEvent){
+        } else if (event is KeyUpEvent && !keysPressed.contains(LogicalKeyboardKey.arrowRight)){
           world.children.query<Bat>().first.changeState("");
         }
       case LogicalKeyboardKey.arrowRight:
-        if (event is KeyDownEvent){
+        if (event is KeyDownEvent || event is KeyRepeatEvent){
           world.children.query<Bat>().first.changeState("R");
-        } else if (event is KeyUpEvent){
+        } else if (event is KeyUpEvent && !keysPressed.contains(LogicalKeyboardKey.arrowLeft)){
           world.children.query<Bat>().first.changeState("");
         }
       case LogicalKeyboardKey.space:
-        if (event is KeyDownEvent){
-          print("Pause");
-        }
-        //pause();
-      case LogicalKeyboardKey.enter:
         startGame();
+      case LogicalKeyboardKey.enter:
+        if (event is KeyDownEvent){
+          pause();
+        }
     }
     return KeyEventResult.handled;
   }
